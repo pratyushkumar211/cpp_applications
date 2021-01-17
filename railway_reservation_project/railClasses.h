@@ -3,6 +3,8 @@ using namespace std;
 
 namespace railClasses{
 
+    const int maxArraySize = 200;
+
     class Passenger{
         public:
             int getAge(){
@@ -30,7 +32,7 @@ namespace railClasses{
         private:
             string name;
             int age;
-};
+    };
 
     class Train{    
         public:
@@ -72,5 +74,5 @@ namespace railClasses{
             int passengerLimit = 100;
             int numPassenger = 0;
             Passenger passengerList[100];    
-};
+    };
 }
