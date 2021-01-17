@@ -1,4 +1,4 @@
-#include<iostream>
+#include <iostream>
 using namespace std;
 
 namespace railClasses{
@@ -15,6 +15,9 @@ namespace railClasses{
                     age = 0;
                     cout << "Very less or high age entered, age set to zero." << endl;
                 };
+            };
+            string getName(){
+                return name;
             };
         Passenger(){
             name = "No name";
@@ -41,6 +44,15 @@ namespace railClasses{
                     travelTime = 1;
                     cout << "Very less or high travel time entered in hours." << endl;
                 };
+            };
+            string getName(){
+                return name;
+            };
+            string getSource(){
+                return source;
+            };
+            string getDestination(){
+                return destination;
             };
         Train(){
             name = "No name";
