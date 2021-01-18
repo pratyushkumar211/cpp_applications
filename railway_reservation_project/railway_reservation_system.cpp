@@ -7,9 +7,9 @@ using namespace railClasses;
 
 bool runApp = true;
 int numPassengers = 0;
-Passenger passengerList[400];
+Passenger passengerList[maxArraySize];
 int numTrains = 0;
-Train trainList[20];
+Train trainList[maxArraySize];
 
 string getMessage(){
     // Get message to print to the console.
@@ -54,50 +54,47 @@ void createTrain(){
     numTrains += 1;
 };
 
-/*
-void startApplication(){
-    // Load the list of passengers and trains if file available.
-    string fileName = "railway_data.dat";
-    ofstream file;
-    Passenger passenger;
-    passenger = Passenger("Pratyush", 18);
-    file.open(fileName, ios::binary);
-    file << 2;
-    file.close();
+ostream& operator << (ostream &out, Passenger &passenger){
+    // Overloading << operator.
+    out << "Name: " << passenger.getName() << ", Age: " << passenger.getAge() << endl;
+    return out;
+};
+
+void printAllPassengers(ostream &out){
+    // Print all the passengers in the system.
+    if (numPassengers == 0){
+        out << "No Passengers added yet." << endl;
+    }else{
+        for (int i=1; i<=numPassengers; i++){
+            out << "Passenger Number :" << i << endl;
+            out << "Name: " << passengerList[i-1].getName() << endl;
+            out << "Age: " << passengerList[i-1].getAge() << endl;
+        };
+    };
+};
+
+void printAllTrains(ostream &out){
+    // Print all the trains in the system.
+    if (numTrains == 0){
+        out << "No Trains added yet." << endl;
+    }else{
+        for (int i=1; i<=numTrains; i++){
+            out << "Train Number :" << i << endl;
+            out << "Name: " << trainList[i-1].getName() << endl;
+            out << "Source: " << trainList[i-1].getSource() << endl;
+            out << "Destination: " << trainList[i-1].getDestination() << endl;
+        };
+    };
 };
 
 void endApplication(){
-    // Save the list of passengers and trains to a file and close.
-
-
-};
-*/
-
-void printAllPassengers(){
-    // Print all the passengers in the system.
-    if (numPassengers == 0){
-        cout << "No Passengers added yet." << endl;
-    }else{
-        for (int i=1; i<=numPassengers; i++){
-            cout << "Passenger Number :" << i << endl;
-            cout << "Name: " << passengerList[i-1].getName() << endl;
-            cout << "Age: " << passengerList[i-1].getAge() << endl;
-        };
-    };
-};
-
-void printAllTrains(){
-    // Print all the trains in the system.
-    if (numTrains == 0){
-        cout << "No Trains added yet." << endl;
-    }else{
-        for (int i=1; i<=numTrains; i++){
-            cout << "Train Number :" << i << endl;
-            cout << "Name: " << trainList[i-1].getName() << endl;
-            cout << "Source: " << trainList[i-1].getSource() << endl;
-            cout << "Destination: " << trainList[i-1].getDestination() << endl;
-        };
-    };
+    // Load the list of passengers and trains if file available.
+    string fileName = "railway.txt";
+    ofstream file;
+    file.open(fileName);
+    printAllPassengers(file);
+    printAllTrains(file);
+    file.close();
 };
 
 void processUserInput(int userInput){
@@ -110,10 +107,10 @@ void processUserInput(int userInput){
             createTrain();
             break;
         case 3:
-            printAllPassengers();
+            printAllPassengers(cout);
             break;
         case 4:
-            printAllTrains();
+            printAllTrains(cout);
             break;
         case 5:
             runApp = false;
@@ -123,20 +120,10 @@ void processUserInput(int userInput){
     };
 };
 
-/*
-
-Add passenger to a train. 
-Print all trains/passengers and passengers in a particular train.
-
-Save data when application is ended and start from there. 
-
-*/
-
-
 int main(){
     // Main function to run the desktop application.
     int numUserInput = 0;
-    int maxUserInput = 6;
+    int maxUserInput = 50;
     int userInput;
     
     // Print message and run the application.
@@ -148,5 +135,6 @@ int main(){
         processUserInput(userInput);
         numUserInput += 1;
     };
+    endApplication();
     return 0;
 }
