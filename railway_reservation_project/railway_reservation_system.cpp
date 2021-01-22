@@ -62,22 +62,16 @@ ostream& operator << (ostream &out, Passenger &passenger){
 
 void printAllPassengers(ostream &out){
     // Print all the passengers in the system.
-    if (numPassengers == 0){
-        out << "No Passengers added yet." << endl;
-    }else{
+    if (numPassengers > 0){
         for (int i=1; i<=numPassengers; i++){
-            out << "Passenger Number :" << i << endl;
-            out << "Name: " << passengerList[i-1].getName() << endl;
-            out << "Age: " << passengerList[i-1].getAge() << endl;
+            out << passengerList[i-1].getName() << ", " << passengerList[i-1].getAge() << endl;
         };
     };
 };
 
 void printAllTrains(ostream &out){
     // Print all the trains in the system.
-    if (numTrains == 0){
-        out << "No Trains added yet." << endl;
-    }else{
+    if (numTrains > 0){
         for (int i=1; i<=numTrains; i++){
             out << "Train Number :" << i << endl;
             out << "Name: " << trainList[i-1].getName() << endl;
