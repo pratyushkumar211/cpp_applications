@@ -65,7 +65,7 @@ namespace railClasses{
                 return numRegisteredPassenger;
             };
 
-            void addPassenger(Passenger passenger){
+            void addPassenger(Passenger &passenger){
                 passengerList[numRegisteredPassenger] = passenger;
                 numRegisteredPassenger += 1;
             };

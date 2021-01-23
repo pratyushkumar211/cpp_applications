@@ -5,11 +5,14 @@
 using namespace std;
 using namespace railClasses;
 
+// A few global variables for the application.
 bool runApp = true;
 int numPassengers = 0;
 Passenger passengerList[maxArraySize];
 int numTrains = 0;
 Train trainList[maxArraySize];
+string passengersFilename = "passengers.txt";
+string trainsFilename = "trains.txt";
 
 string getMessage(){
     // Get message to print to the console.
@@ -64,7 +67,7 @@ void printAllPassengers(ostream &out){
     // Print all the passengers in the system.
     if (numPassengers > 0){
         for (int i=1; i<=numPassengers; i++){
-            out << passengerList[i-1].getName() << ", " << passengerList[i-1].getAge() << endl;
+            out << passengerList[i-1].getName() << "," << passengerList[i-1].getAge() << endl;
         };
     };
 };
@@ -73,22 +76,66 @@ void printAllTrains(ostream &out){
     // Print all the trains in the system.
     if (numTrains > 0){
         for (int i=1; i<=numTrains; i++){
-            out << "Train Number :" << i << endl;
-            out << "Name: " << trainList[i-1].getName() << endl;
-            out << "Source: " << trainList[i-1].getSource() << endl;
-            out << "Destination: " << trainList[i-1].getDestination() << endl;
+            out << trainList[i-1].getName();
+            out << "," << trainList[i-1].getSource();
+            out << "-" << trainList[i-1].getDestination();
+            out << "," << trainList[i-1].getTravelTime() << endl;
         };
     };
 };
 
 void endApplication(){
-    // Load the list of passengers and trains if file available.
-    string fileName = "railway.txt";
+    // Save everything to a file.
     ofstream file;
-    file.open(fileName);
+
+    // First save passengers.
+    file.open(passengersFilename);
     printAllPassengers(file);
+    file.close();
+
+    // Next save trains.
+    file.open(trainsFilename);
     printAllTrains(file);
     file.close();
+
+};
+
+void loadTrains(ifstream &file){
+    string name, source, destination, travelTimeStr;
+    double travelTime;
+    file.open(trainsFilename);
+    while(!file.eof()){
+        getline(file, name, ',');
+        getline(file, source, '-');
+        getline(file, destination, ',');
+        getline(file, travelTimeStr);
+        travelTime = stod(travelTimeStr);
+        trainList[numTrains] = Train(name, source, destination, travelTime);
+        cout << name << source << destination << travelTime << endl;
+        numTrains += 1;
+    };
+    file.close();
+};
+
+void loadPassengers(ifstream &file){
+    string name;
+    int age;
+    file.open(passengersFilename);
+    while(!file.eof()){
+        getline(file, name, ',');
+        file >> age;
+        file.ignore();
+        passengerList[numPassengers] = Passenger(name, age);
+        numPassengers += 1;
+    };
+    file.close();
+};
+
+void startApplication(){
+    // Load data from files at the start of the application. 
+    ifstream file;
+    loadPassengers(file);
+    loadTrains(file);
 };
 
 void processUserInput(int userInput){
@@ -116,6 +163,7 @@ void processUserInput(int userInput){
 
 int main(){
     // Main function to run the desktop application.
+    startApplication();
     int numUserInput = 0;
     int maxUserInput = 50;
     int userInput;
@@ -129,6 +177,6 @@ int main(){
         processUserInput(userInput);
         numUserInput += 1;
     };
-    endApplication();
+    //endApplication();
     return 0;
 }
