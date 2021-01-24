@@ -104,25 +104,23 @@ void loadTrains(ifstream &file){
     string name, source, destination, travelTimeStr;
     double travelTime;
     file.open(trainsFilename);
-    while(!file.eof()){
-        getline(file, name, ',');
+    while(!getline(file, name, ',').eof()){
         getline(file, source, '-');
         getline(file, destination, ',');
         getline(file, travelTimeStr);
         travelTime = stod(travelTimeStr);
         trainList[numTrains] = Train(name, source, destination, travelTime);
-        cout << name << source << destination << travelTime << endl;
+        //cout << name << source << destination << travelTime << endl;
         numTrains += 1;
     };
     file.close();
 };
 
 void loadPassengers(ifstream &file){
-    string name;
+    string line, name;
     int age;
     file.open(passengersFilename);
-    while(!file.eof()){
-        getline(file, name, ',');
+    while(!getline(file, name, ',').eof()){
         file >> age;
         file.ignore();
         passengerList[numPassengers] = Passenger(name, age);
@@ -177,6 +175,6 @@ int main(){
         processUserInput(userInput);
         numUserInput += 1;
     };
-    //endApplication();
+    endApplication();
     return 0;
 }
