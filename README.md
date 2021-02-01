@@ -1,1 +1,1 @@
-# crash_course_Cpp
+# Console desktop applications to improve C++ programming skills.
